@@ -75,7 +75,7 @@ while i < 20:
     x_s = station1.get_ECI(t/86400)
     t = t+dt
     range = np.sqrt((x[0]-x_s[0])**2+(x[1]-x_s[1])**2+(x[2]-x_s[2])**2)
-    params = {'range':range,'t':t/86400,'mission_id':mission_id,'sigma':1}
+    params = {'range':range,'t':t,'mission_id':mission_id,'sigma':1}
     requests.post(url=URL,params=params)
     time.sleep(1)
     i += 1

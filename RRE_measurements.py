@@ -124,6 +124,7 @@ class station:
         return val.format(self.name, self.latitude, self.longitude, self.height)
         
     def get_ECI(self, t):
+        t = 86400*t #Not the best practice...
         date = time.Time(t, format='mjd')
         pos, vel = astro.EarthLocation.from_geodetic(self.longitude, self.latitude, self.height).get_gcrs_posvel(date)
         ECEF = np.append(pos.xyz.to(u.km).value, vel.xyz.to(u.km/u.s).value)
