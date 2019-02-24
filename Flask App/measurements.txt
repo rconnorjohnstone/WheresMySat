@@ -1,0 +1,4 @@
+"{'station_id': ['Boulder'], 'station_lat': ['40.0'], 'station_long': ['-105.2'], 'station_height': ['6379.782219989121']}"
+"{'range': ['4857.053175280568'], 't': ['58538.00011574074'], 'mission_id': ['The Coolest Mission in the World'], 'sigma': ['1']}"
+"{'range': ['4865.373036184431'], 't': ['58538.000231481485'], 'mission_id': ['The Coolest Mission in the World'], 'sigma': ['1']}"
+"{'range': ['4874.0630021849365'], 't': ['58538.00034722222'], 'mission_id': ['The Coolest Mission in the World'], 'sigma': ['1']}"
