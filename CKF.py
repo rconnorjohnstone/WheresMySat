@@ -67,6 +67,8 @@ class KF(object):
         ad_state = ad.adnumber(state)
         state_deriv = self.force_model(0, ad_state)
         a_matrix = jacobian(state_deriv, ad_state)
+        # remove ad number 
+        state_deriv = [state.real for state in state_deriv]
 
         return state_deriv, a_matrix
     
@@ -75,7 +77,6 @@ class KF(object):
         n = self.len_state
         #unpack phi and state
         phi = state_w_phi[n:].reshape((n,n))
-#        phi = np.eye(self.len_state)
         state = state_w_phi[:n]
         #calculate derivative of phi and state
         state_deriv, a_matrix = self._derivatives(state)
@@ -147,12 +148,11 @@ for index in range(len(msrs)):
     ts.append(msrs[index].time)
     x = CKFilter(state0_ref, P0, dx_p, t_prev, \
                        ForceModel([point_mass,j2_accel]), msrs[index])
-    x.run(msr)
+    x.run(msrs[index])
     ckfest.append(x.state0_ref+x.dx_p.reshape((6,1)))
     P_s.append(x.P0)
     dx_ps.append(x.dx_p)
     xs.append(x)
-    print(x.dx_p)
 
 #plot for fun
 plotselect = [1]

@@ -48,12 +48,12 @@ def genmeas2(inttime, timestep, y0, save):
         for i in range(len(stations)):
             state_s = stationstate(stations[i][0], stations[i][1], theta0,10.*(j+1), we)
             H = genHtilde(state_sc, state_s)
-            H = H[0,:].reshape((1,6))
+            H = H[1,:].reshape((1,6))
             zenel = genel(state_sc, state_s)
             if zenel < zenelmask:
                 rho, rhod = genmeas(state_sc, state_s)
                 #append [time stamp, station #, elevation, range, range rate]
-                measurements.append(measurementclss(rho, state_sol.t[-1], \
+                measurements.append(measurementclss(rhod, state_sol.t[-1], \
                                                     i+1,H, r, sigma))
     measurements = np.array(measurements)
     if save == 1:
