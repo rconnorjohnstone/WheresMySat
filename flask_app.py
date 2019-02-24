@@ -39,7 +39,7 @@ def grab_measurements():
         apriori_cov = np.diag(inputs['apriori_cov'])
         apriori_pert = np.array(inputs['apriori_pert'])
         t0 = inputs['init_time']
-        globals()['KALMANFILTER'] = CKFilter(apriori_state,apriori_cov,apriori_pert,t0,forceModel)
+        globals()['KALMANFILTER'] = CKFilter(apriori_state+apriori_pert,apriori_cov,apriori_pert,t0,forceModel)
         globals()['DBIO'] = DataBaseIO()
         return 'ridiculous'
     elif request.method == 'POST':
@@ -55,7 +55,6 @@ def grab_measurements():
         time = time/86400
         dt = julian.from_jd(time,fmt='mjd')
         time = dt.strftime('%Y-%m-%dT%H:%M:%SZ')
-        
         globals()['DBIO'].push(state_est, cov_est, time)
         
         return 'something stupid'

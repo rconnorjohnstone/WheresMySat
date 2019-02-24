@@ -84,7 +84,7 @@ class KF(object):
         phi = np.eye(self.len_state)
         state_w_phi = np.concatenate((state.reshape(self.len_state), phi.flatten()))
         state_w_phi = solve_ivp(self.state_w_phi_ode, [self.t_prev, time],
-                                state_w_phi)
+                                state_w_phi, method="LSODA", atol=1e-10, rtol=1e-8)
         state_w_phi = state_w_phi.y[:,-1]
         state = state_w_phi[:self.len_state]
         phi = state_w_phi[self.len_state:].reshape((self.len_state, self.len_state))
@@ -166,6 +166,7 @@ class CKFilter(KF):
         self.state0_ref = state_ref
         self.P0 = P_p
         self.dx_p = dx_p
+        self.t_prev = msr.time
 
         return state_ref + dx_p, P_p
 
@@ -183,7 +184,7 @@ class CKFilter(KF):
         """
         state_ref, phi = self._compute_stm_and_state(state, time)
         dx_m = phi @ self.dx_p
-        P_m = phi @ P_p @ phi.T
+        P_m = 1 * phi @ P_p @ phi.T
 
         return state_ref, dx_m, P_m
 
