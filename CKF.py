@@ -45,12 +45,13 @@ class KF(object):
         
         return H_tilde, K
 
-    def _compute_stm_and_state(self, time):
+    def _compute_stm_and_state(self, state, time):
         """integrate EOM and A equation to solve for STM and state"""
         phi = np.eye(self.len_state)
-        state_w_phi = np.concatenate((self.states_ref[-1][:,0], phi.flatten()))
+        state_w_phi = np.concatenate((state.reshape(self.len_state), phi.flatten()))
         state_w_phi = solve_ivp(self.state_w_phi_ode, [self.t_prev, time], \
-                                state_w_phi, t_eval = [time], max_step = 5).y
+                                state_w_phi)
+        state_w_phi = state_w_phi.y[:,-1]
         state = state_w_phi[:self.len_state]
         phi = state_w_phi[self.len_state:].reshape((self.len_state, self.len_state))
         
@@ -73,13 +74,13 @@ class KF(object):
         """ODE describing state dynamics and dphi/dt"""
         n = self.len_state
         #unpack phi and state
-        phi = state_w_phi[n:].reshape((n,n)).T
+        phi = state_w_phi[n:].reshape((n,n))
 #        phi = np.eye(self.len_state)
         state = state_w_phi[:n]
         #calculate derivative of phi and state
         state_deriv, a_matrix = self._derivatives(state)
         phid =  a_matrix @ phi
-        phid_flat = phid.T.flatten()
+        phid_flat = phid.flatten()
         #concatenate state and phi derivatives
         state_w_phi_d = np.concatenate((state_deriv, phid_flat))
         
@@ -96,7 +97,7 @@ class CKFilter(KF):
     def run(self, msr):
 #        for msr in self.msrs:
         #time update
-        state_ref, dx_m, P_m = self._timeupdate(msr.time, P0)
+        state_ref, dx_m, P_m = self._timeupdate(self.state0_ref, msr.time, self.P0)
         #observation
         H_tilde, K = self._kalman_gain(P_m, msr.sigma, msr.H_tilde)
         #measurment update
@@ -107,8 +108,8 @@ class CKFilter(KF):
         self.dx_p = dx_p
         
     #propagate state and covariance forward            
-    def _timeupdate(self, time, P_p):
-        state_ref, phi = self._compute_stm_and_state(time)
+    def _timeupdate(self, state, time, P_p):
+        state_ref, phi = self._compute_stm_and_state(state, time)
         dx_m = phi @ self.dx_p
         P_m = phi @ P_p.T @ phi.T
         return state_ref, dx_m, P_m
@@ -125,7 +126,7 @@ class CKFilter(KF):
 state0_ref = np.array([-3515.49032703351, 8390.716310243391, 4127.627352553682, \
               -4.357676323818018, -3.356579140027686, 3.1118929290409585]).reshape((6,1))
 msrs = genMSM()
-P0 = np.diag(np.full(6,1e-3))
+P0 = np.diag(np.full(6,1e2))
 dx_p = np.zeros(6)
 R = 1e-6#np.diag([1e-6,1e-9])
 len_state = 6
@@ -162,5 +163,5 @@ if 1 in plotselect:
     fig, ax = plt.subplots(3,2)
     for j in range(2):
         for i in range(3):
-            ax[i,j].scatter(ts, dx_p[:,i+j])
-            ax[i,j].scatter(ts, P_ps[:,i+j,i+j], s=2)
+            ax[i,j].scatter(ts[:], dx_p[:,i+j])
+            ax[i,j].scatter(ts[:], P_ps[:,i+j,i+j], s=2)
