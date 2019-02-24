@@ -175,14 +175,14 @@ len_state = 6
 x = CKFilter(state0_ref, msrs, P0, dx_p, R, len_state)
 x.run()
 
-plotselect = [1]
-
-if 1 in plotselect:
-    P_ps = np.array(x.P_ps).shape
-    dx_p = np.array(x.dx_p)
-    fig, ax = plt.subplots(3,2)
-    for j in range(2):
-        for i in range(3):
-            ax[i,j].scatter(x.times, dx_p[:,i+j])
-            ax[i,j].scatter(x.times, P_ps[:,i+j,i+j])
-    
+#plot for fun
+#plotselect = [1]
+#
+#if 1 in plotselect:
+#    P_ps = np.array(x.P_ps)
+#    dx_p = np.array(x.dx_p)
+#    fig, ax = plt.subplots(3,2)
+#    for j in range(2):
+#        for i in range(3):
+#            ax[i,j].scatter(x.times, dx_p[:,i+j])
+#            ax[i,j].scatter(x.times, P_ps[:,i+j,i+j], s=2)
