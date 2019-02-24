@@ -17,9 +17,6 @@ import numpy as np
 import ad
 from ad import jacobian
 
-# local imports
-from propagator import *
-
 
 class KF(object):
     """Parent class for Kalman Filters
@@ -62,15 +59,15 @@ class KF(object):
         Args:
            P_m (np.ndarray [n x n]): post-propagtion, pre-measurement covariance
            R (float) = variance of measurement
-           H_tilde (np.ndarray [p x n]): measurement sensitivity matrix
+           h_tilde (np.ndarray [p x n]): measurement sensitivity matrix
 
         Returns:
            (np.ndarray)
 
         """
-        K = P_m @ H_tilde.T @ np.linalg.inv(H_tilde @ P_m @ H_tilde.T + R)
+        K = P_m @ h_tilde.T @ np.linalg.inv(h_tilde @ P_m @ h_tilde.T + R)
 
-        return H_tilde, K
+        return h_tilde, K
 
     def _compute_stm_and_state(self, state, time):
         """integrate EOM and A equation to solve for STM and state
@@ -160,9 +157,9 @@ class CKFilter(KF):
 
         """
         state_ref, dx_m, P_m = self._timeupdate(self.state0_ref, msr.time, self.P0)
-        resid, h_tilde = msr.resid()
-        H_tilde, K = self._kalman_gain(P_m, msr.sigma, msr.H_tilde)
-        dx_p, P_p = self._measupdate(dx_m, P_m, msr.r, msr.H_tilde, K, msr.sigma)
+        resid, h_tilde = msr.residual(state_ref)
+        h_tilde, K = self._kalman_gain(P_m, msr.sigma, h_tilde)
+        dx_p, P_p = self._measupdate(dx_m, P_m, resid, h_tilde, K, msr.sigma)
 
         #store covariance and state corrections
         self.state0_ref = state_ref
@@ -190,14 +187,14 @@ class CKFilter(KF):
         return state_ref, dx_m, P_m
 
 
-    def _measupdate(self, dx_m, P_m, msr_resid, H_tilde, K, R):
+    def _measupdate(self, dx_m, P_m, msr_resid, h_tilde, K, R):
         """Compute posteriori state and covariance
 
         Args:
            dx_m (np.ndarray [1 x n]): post propagation perturbation vector
            P_m (np.ndarray [n x n]): post propagation covariance matrix
            msr_resid (np.ndarray [q x 1]): measurement residuals
-           H_tilde (np.ndarray [q x n]): measurement sensitivity matrix
+           h_tilde (np.ndarray [q x n]): measurement sensitivity matrix
            K (np.ndarray): Kalman gain
            R (float): measurement variance
 
@@ -205,53 +202,8 @@ class CKFilter(KF):
            (np.ndarray [1 x n], np.ndarray [n x n])
 
         """
-        dx_p = dx_m + K @ (msr_resid - H_tilde @ dx_m)
-        P_p = (np.eye(self.len_state) - K @ H_tilde) @ P_m @ (np.eye(self.len_state)\
-               - K @ H_tilde).T + R * K @ K.T
+        dx_p = dx_m + K @ (msr_resid - h_tilde @ dx_m)
+        P_p = (np.eye(self.len_state) - K @ h_tilde) @ P_m @ (np.eye(self.len_state)\
+               - K @ h_tilde).T + R * K @ K.T
 
         return dx_p, P_p
-
-#Test code
-"""
-state0_ref = np.array([-3515.49032703351, 8390.716310243391, 4127.627352553682, \
-              -4.357676323818018, -3.356579140027686, 3.1118929290409585]).reshape((6,1))
-msrs = genMSM()
-P0 = np.diag(np.full(6,1e2))
-dx_p = np.zeros(6)
-R = 1e-6#np.diag([1e-6,1e-9])
-len_state = 6
-xs = []
-ckfest = [dx_p+state0_ref]
-dx_ps = [dx_p]
-P_s = [P0]
-t_prev = 0
-ts = [t_prev]
-for index in range(len(msrs)):
-    if index==0:
-        t_prev = 0
-    else:
-        t_prev = msrs[index].time
-        state0_ref = x.state0_ref
-        P0 = x.P0
-        t_prev = msrs[index - 1].time
-    ts.append(msrs[index].time)
-    x = CKFilter(state0_ref, P0, dx_p, t_prev, \
-                       ForceModel([point_mass,j2_accel]), msrs[index])
-    x.run(msrs[index])
-    ckfest.append(x.state0_ref+x.dx_p.reshape((6,1)))
-    P_s.append(x.P0)
-    dx_ps.append(x.dx_p)
-    xs.append(x)
-
-#plot for fun
-plotselect = [1]
-#ts = np.linspace(0,69,70)
-if 1 in plotselect:
-    P_ps = np.array(P_s)
-    dx_p = np.array(dx_ps)
-    fig, ax = plt.subplots(3,2)
-    for j in range(2):
-        for i in range(3):
-            ax[i,j].scatter(ts[:], dx_p[:,i+j])
-            ax[i,j].scatter(ts[:], P_ps[:,i+j,i+j], s=2)
-"""
