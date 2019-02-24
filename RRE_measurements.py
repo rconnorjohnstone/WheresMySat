@@ -14,7 +14,7 @@ Author:Connor Johnstone
 #Import Libraries
 import numpy as np
 import WheresMySat as WMS
-from measurements import Meas
+from WheresMySat.measurements import Meas
 import astropy.coordinates as astro
 from astropy import units as u
 from astropy import time
@@ -41,7 +41,7 @@ class RangeMeas(Meas):
         
     def gen_meas(self, state):
         x,y,z = state[0:3]
-        x_s,y_s,z_s = self.station_obj.get_ECI(self.t)[0:3]
+        x_s,y_s,z_s = self.station_obj.get_ECI(self.time/86400)[0:3]
         range = np.sqrt((x-x_s)**2+(y-y_s)**2+(z-z_s)**2)
         return range
 
@@ -65,7 +65,7 @@ class RangeRateMeas(Meas):
      
     def gen_meas(self,state):
         x,y,z,vx,vy,vz = state
-        x_s,y_s,z_s,vx_s,vy_s,vz_s = self.station_obj.get_ECI(self.t)
+        x_s,y_s,z_s,vx_s,vy_s,vz_s = self.station_obj.get_ECI(self.time/86400)
         range = np.sqrt((x-x_s)**2+(y-y_s)**2+(z-z_s)**2)
         range_rate = ((x-x_s)*(vx-vx_s)+(y-y_s)*(vy-vy_s)+(z-z_s)*(vz-vz_s))/range
         return range_rate
@@ -90,14 +90,14 @@ class ElevMeas(Meas):
       
     def gen_meas(self,state):
         x,y,z = state[0:3]
-        x_s,y_s,z_s = self.station_obj.get_ECI(self.t)[0:3]
+        x_s,y_s,z_s = self.station_obj.get_ECI(self.time/86400)[0:3]
         xy_range = np.sqrt((x-x_s)**2+(y-y_s)**2)
         z_range = z-z_s
         elev = atan(z_range/xy_range)*180/np.pi
         return elev
     
         
-class station:
+class Station:
     ''' Station object
     Represents a groundstation. Inputs are latitude and longitude of the station, but the convert
     method converts to earth centered inertial  coordinates.

@@ -12,7 +12,7 @@ from math import sqrt, exp
 from numba import jit
 
 ### CONSTANTS ####
-from __init__ import mu_Ea, J2_Ea
+from WheresMySat import mu_Ea, J2_Ea
 
 ### Propagator
 def propagate_sc_traj(istates, force_model, times, dt=0.01):

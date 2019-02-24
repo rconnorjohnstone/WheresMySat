@@ -29,7 +29,7 @@ class Meas(ABC):
     def __init__(self,value,time,mission_id,sigma):
         self.value = value
         self.sigma = sigma
-        self.t = time
+        self.time = time
         self.mis_id = mission_id
         
     @abstractmethod

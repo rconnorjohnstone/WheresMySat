@@ -74,9 +74,9 @@ class DataBaseIO(object):
             if idx in [0,1,2,3,4,5]:
                 params_json['fields'][val] = state_est[idx]
             if idx in [6, 7, 8]:
-                params_json['fields'][val] = sigmas[idx]
+                params_json['fields'][val] = sigmas[idx-3]
             if idx in [9, 10, 11]:
-                params_json['fields'][val] = three_sigs[idx]
+                params_json['fields'][val] = three_sigs[idx-6]
 
         self.client.write_points([params_json])
 

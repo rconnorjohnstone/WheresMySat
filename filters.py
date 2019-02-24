@@ -65,6 +65,7 @@ class KF(object):
            (np.ndarray)
 
         """
+        h_tilde = np.array(H_tilde)
         K = P_m @ h_tilde.T @ np.linalg.inv(h_tilde @ P_m @ h_tilde.T + R)
 
         return h_tilde, K
@@ -123,7 +124,7 @@ class KF(object):
 
         """
         #unpack phi and state
-        phi = state_w_phi[n:self.len_state].reshape((self.len_state,
+        phi = state_w_phi[self.len_state:].reshape((self.len_state,
                                                      self.len_state))
         state = state_w_phi[:self.len_state]
         #calculate derivative of phi and state
@@ -147,7 +148,7 @@ class CKFilter(KF):
         dx_p (np.ndarray): initial guess of perturbation vector
 
     """
-    def __init__(self, state0_ref, P0, dx_p, t_prev, force_model, msr):
+    def __init__(self, state0_ref, P0, dx_p, t_prev, force_model):
         super().__init__(state0_ref, P0, t_prev, force_model)
         self.dx_p = dx_p
 
