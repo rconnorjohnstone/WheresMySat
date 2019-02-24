@@ -1,3 +1,12 @@
+#/usr/bin/env python
+"""Database Module
+
+Author: Hunter Mellema
+Summary: Provides the ability to interface with and write kalman filter measurements to an influx
+   database.
+
+"""
+
 from influxdb import InfluxDBClient
 import numpy as np
 import time
@@ -29,7 +38,10 @@ class DataBaseIO(object):
     Args:
         host (str): IP of database host
         port (int): port on which database is listening for HTTP
-        username (str): username to
+        username (str): username to use for interfacing with database
+        password (str): password to use to access database
+        database (str): name of database on host to access
+
     """
     def __init__(self, host=HOST_IP, port=HOST_PORT, username=USERNAME,
                  password=SECRET, database=DATABASE):
@@ -42,6 +54,12 @@ class DataBaseIO(object):
 
     def push(self, state_est, cov_est, time):
         """ Pushes kalman filter outputs to database
+
+        Args:
+            state_est (np.ndarray [1 x n]): state vector estimated by kalman filter
+            cov_est (np.ndarray [n x n]): covariance matrix estimated by filter
+            time (str): time at which measurement was taken
+
         """
         sigmas = parse_cov(cov_est, len(state_est))
         three_sigs = np.multiply(3, sigmas)
@@ -69,7 +87,6 @@ def parse_cov(cov, len_state):
     Args:
         cov (np.ndarray [n x n]): covariance matrix output from kalman filter
         len_state (int): length of the state vector
-
 
     """
     return  [np.sqrt(np.fabs(cov[i][i])) for i in range(len_state)]
