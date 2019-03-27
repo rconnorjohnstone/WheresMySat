@@ -2,18 +2,19 @@ version: '3.2'
 networks: 
     postgres-network: 
 services: 
-    postgres1: 
+    userdb: 
         image: library/postgres:latest
         volumes: 
             - type: bind
               source: /tmp/pgdata
               target: /var/lib/postgresql/data
         environment: 
-            - POSTGRES_USER=flaskapp 
-            - POSTGRES_PASSWORD=${SECRET_PG}
+            - POSTGRES_USER=flaskapp
+            - POSTGRES_PASSWORD=foo
             - POSTGRES_DB=flaskapp
         networks: 
             - postgres-network
+        container_name: "userdb"
             
     frontend: 
         build: ./frontend
@@ -29,4 +30,4 @@ services:
         networks: 
             - postgres-network 
         depends_on: 
-            - postgres1
+            - userdb
