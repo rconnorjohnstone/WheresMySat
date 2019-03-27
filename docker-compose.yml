@@ -1,0 +1,32 @@
+version: '3.2'
+networks: 
+    postgres-network: 
+services: 
+    postgres1: 
+        image: library/postgres:latest
+        volumes: 
+            - type: bind
+              source: /tmp/pgdata
+              target: /var/lib/postgresql/data
+        environment: 
+            - POSTGRES_USER=flaskapp 
+            - POSTGRES_PASSWORD=${SECRET_PG}
+            - POSTGRES_DB=flaskapp
+        networks: 
+            - postgres-network
+            
+    frontend: 
+        build: ./frontend
+        ports: 
+            - "5000:5000"
+        volumes: 
+            - type: bind
+              source: ./frontend/assets/static
+              target: /usr/app/static
+            - type: bind
+              source: ./frontend/assets/templates
+              target: /usr/app/templates
+        networks: 
+            - postgres-network 
+        depends_on: 
+            - postgres1
