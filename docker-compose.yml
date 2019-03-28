@@ -1,7 +1,14 @@
 version: '3.2'
+
 networks: 
     postgres-network: 
     grafana-data:
+    worker-data: 
+
+volumes: 
+    grafana_data:
+    influxdb:
+
 services: 
     userdb: 
         image: library/postgres:latest
@@ -33,13 +40,30 @@ services:
         depends_on: 
             - userdb
 
+    filter-data: 
+        image: influxdb:latest
+        volumes: 
+            - influxdb:/var/lib/influxdb
+        environment: 
+            - INFLUXDB_DB=filter_data
+            - INFLUXDB_USER=worker-node
+            - INFLUXDB_USER_PASSWORD=foo
+        networks: 
+            - worker-data
+            - grafana-data
+
     grafana: 
         image: grafana/grafana:latest
+        depends_on: 
+            - filter-data
         ports: 
             - "3000:3000"
+        volumes: 
+            - grafana_data:/var/lib/grafana
+            - ./grafana/provisioning/:/etc/grafana/provisioning/
         environment: 
             - GF_SERVER_ROOT_URL=http://grafana.server.name
             - GF_SECURITY_ADMIN_PASSWORD=secret
         networks: 
             - grafana-data
-        
+
