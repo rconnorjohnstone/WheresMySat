@@ -1,6 +1,7 @@
 version: '3.2'
 networks: 
     postgres-network: 
+    grafana-data:
 services: 
     userdb: 
         image: library/postgres:latest
@@ -31,3 +32,14 @@ services:
             - postgres-network 
         depends_on: 
             - userdb
+
+    grafana: 
+        image: grafana/grafana:latest
+        ports: 
+            - "3000:3000"
+        environment: 
+            - GF_SERVER_ROOT_URL=http://grafana.server.name
+            - GF_SECURITY_ADMIN_PASSWORD=secret
+        networks: 
+            - grafana-data
+        
