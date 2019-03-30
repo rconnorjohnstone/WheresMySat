@@ -12,7 +12,7 @@ volumes:
 
 services: 
     userdb: 
-        image: library/postgres:latest
+        image: postgres:11-alpine
         volumes: 
             - type: bind
               source: /tmp/pgdata
@@ -43,7 +43,7 @@ services:
             - userdb
 
     filter-data: 
-        image: influxdb:latest
+        image: influxdb:1.5-alpine
         volumes: 
             - influxdb:/var/lib/influxdb
         environment: 
@@ -55,7 +55,7 @@ services:
             - grafana-data
 
     grafana: 
-        image: grafana/grafana:latest
+        image: grafana/grafana:6.0.2
         depends_on: 
             - filter-data
         ports: 
