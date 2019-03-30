@@ -8,6 +8,7 @@ networks:
 volumes: 
     grafana_data:
     influxdb:
+    upload-data:
 
 services: 
     userdb: 
@@ -35,6 +36,7 @@ services:
             - type: bind
               source: ./frontend/assets/templates
               target: /usr/app/templates
+            - upload-data:/usr/app/uploads
         networks: 
             - postgres-network 
         depends_on: 
