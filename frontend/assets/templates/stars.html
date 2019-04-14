@@ -1,0 +1,96 @@
+<style>
+.hero-body {
+  height: 100%;
+  background:  radial-gradient(circle at 50% 0%,#2b283c 0%, #1b182c 25%, #100e23 40%);
+  overflow: hidden;
+}
+
+{% set starlist1 = gen_star_pos_list(500) %}
+{% set starlist2 = gen_star_pos_list(200) %}
+{% set starlist3 = gen_star_pos_list(100) %}
+
+#stars {
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  border-radius: 50%;
+  opacity: 0.5;
+  box-shadow: {{ starlist1 }}
+  animation: animStar 150s linear infinite;
+}
+#stars:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: {{ starlist1 }}
+}
+
+#stars2 {
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: {{ starlist2 }}
+  animation: animStar 250s linear infinite;
+}
+#stars2:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 3px;
+height: 3px;
+
+  background: transparent;
+  box-shadow: {{ starlist2 }}
+}
+
+#stars3 {
+  width: 4px;
+  height: 4px;
+background: transparent;
+border-radius: 50%;
+box-shadow:	{{ starlist3 }}
+animation: animStar 300s linear infinite;
+}
+#stars3:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 4px;
+  height: 4px;
+  background: transparent;
+  box-shadow: {{ starlist3 }}
+}
+
+#title {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  color: #FFF;
+  text-align: center;
+  font-family: "lato", sans-serif;
+  font-weight: 300;
+  font-size: 50px;
+  letter-spacing: 10px;
+  margin-top: -60px;
+  padding-left: 10px;
+}
+
+#title span {
+  background: -webkit-linear-gradient(white, #38495a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+</style>

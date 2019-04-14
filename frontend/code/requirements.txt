@@ -1,0 +1,7 @@
+Flask>=0.12
+WTForms>=2.1
+SQLAlchemy>=1.1.9
+py-bcrypt
+requests>=2.2.1
+psycopg2
+waitress
