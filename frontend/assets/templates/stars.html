@@ -1,10 +1,4 @@
 <style>
-.hero-body {
-  height: 100%;
-  background:  radial-gradient(circle at 50% 0%,#2b283c 0%, #1b182c 25%, #100e23 40%);
-  overflow: hidden;
-}
-
 {% set starlist1 = gen_star_pos_list(500) %}
 {% set starlist2 = gen_star_pos_list(200) %}
 {% set starlist3 = gen_star_pos_list(100) %}
@@ -16,7 +10,7 @@
   border-radius: 50%;
   opacity: 0.5;
   box-shadow: {{ starlist1 }}
-  animation: animStar 150s linear infinite;
+  animation: animStar 100s linear infinite;
 }
 #stars:after {
   content: " ";
@@ -33,7 +27,7 @@
   height: 2px;
   background: transparent;
   box-shadow: {{ starlist2 }}
-  animation: animStar 250s linear infinite;
+  animation: animStar 200s linear infinite;
 }
 #stars2:after {
   content: " ";
@@ -54,6 +48,7 @@ border-radius: 50%;
 box-shadow:	{{ starlist3 }}
 animation: animStar 300s linear infinite;
 }
+
 #stars3:after {
   content: " ";
   position: absolute;
@@ -64,27 +59,6 @@ animation: animStar 300s linear infinite;
   box-shadow: {{ starlist3 }}
 }
 
-#title {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  color: #FFF;
-  text-align: center;
-  font-family: "lato", sans-serif;
-  font-weight: 300;
-  font-size: 50px;
-  letter-spacing: 10px;
-  margin-top: -60px;
-  padding-left: 10px;
-}
-
-#title span {
-  background: -webkit-linear-gradient(white, #38495a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 @keyframes animStar {
   from {
     transform: translateY(0px);
@@ -93,4 +67,5 @@ animation: animStar 300s linear infinite;
     transform: translateY(-2000px);
   }
 }
+
 </style>
