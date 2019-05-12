@@ -5,147 +5,69 @@
 {% endblock %}
 
 {% block body %}
-<!--
-<section class="hero is-bold is-white is-medium" style="background-image: none;">
-<section class="hero is-white is-medium">
-  <nav class="navbar is-transparent">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="/">
-        <img src="static/img/logo.png" alt="Epicycle Logo">
-        <h6 href="/" class="subtitle"><strong> EPICYCLE </strong></h6>
-      </a>
-      <div id="navbar-burger-id" class="navbar-burger burger" data-target="navbar-menu-id">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-    <div id="navbar-menu-id" class="navbar-menu">
-      <div class="navbar-end">
-        <a class="navbar-item">
-          <div class="field">
-            <p class="control has-icons-left">
-              <input class="login-input input is-small is-info" type="text" id="login-user" placeholder="Username">
-                <span class="icon is-small is-left">
-                  <i class="fa fa-user"></i>
-                </span>
-            </p>
-          </div>
-        </a>
-        <a class="navbar-item">
-          <div class="field">
-            <p class="control has-icons-left">
-              <input class="login-input input is-small is-info" type="password" id="login-pass" placeholder="Password">
-                <span class="icon is-small is-left">
-                  <i class="fa fa-lock"></i>
-                </span>
-            </p>
-          </div>
-        </a>
-        <span class="navbar-item">
-          <a id="login-button" class="button is-link is-inverted">
-            <span class="icon">
-              <i class="fa fa-check"></i>
-            </span>
-            <span>Login</span>
-          </a>
-        </span>
-      </div>
-    </div>
-  </nav>
-</section>
---> 
-
-
-
-<title> Epicycle </title>
-<div class="ui inverted vertical masthead center aligned segment" style="background-image: radial-gradient(circle at 50% 0%,#2b283c 0%, #1b182c 25%, #100e23 40%);"> 
-<!-- div class="hero-body" style="border-bottom-left-radius: 45% 10%; border-bottom-right-radius: 45% 10%; box-shadow: 0px 0.5px 1px 4px rgba(68, 68, 68, 0.6);" -->
-    <div class="container has-text-centered">
-       <div id='stars'></div>
-  	   <div id='stars2'></div>
-  	   <div id='stars3'></div>
-      <div class="columns">
-        <div class="column is-auto">
-          <br>
-          <p class="title is-2" style="color:white;"> Epicycle </p>
-          <p class="subtitle is-4" style="color:white;"><i> Simple Tool For Orbit Determination </i></p>
-          <p class="subtitle is-5" style="color:white;">&#x2022 Test a variety of filters </p>
-          <p class="subtitle is-5" style="color:white;">&#x2022 Estimate Spacecraft State in real time </p>
-          <p class="subtitle is-5" style="color:white;">&#x2022 Clean, simple data visualization </p>           
-        </div>
-        <div class="column is-auto">
-          <div id="signup-box" class="signup-box">
-            <div class="signup-area">
-              <h1 class="title" style="color:white;">Sign Up</h1>
-              <div class="field">
-                <p class="control has-icons-left has-icons-right">
-                  <input id="signup-user" class="input is-link" type="text" placeholder="Username">
-                  <span class="icon is-small is-left">
-                    <i class="fa fa-user" style="color:white;"></i>
-                  </span>
-                  <span class="icon is-small is-right">
-                    <i class="fa fa-check" style="color:white;"></i>
-                  </span>
-                </p>
-              </div>
-              <div class="field">
-                <p class="control has-icons-left has-icons-right">
-                  <input id="signup-mail" style="color:white;"  class="input is-link" type="text" placeholder="Email">
-                  <span class="icon is-small is-left">
-                    <i class="fa fa-envelope"></i>
-                  </span>
-                  <span class="icon is-small is-right">
-                    <i class="fa fa-check"></i>
-                  </span>
-                </p>
-              </div>
-              <div class="field">
-                <p class="control has-icons-left has-icons-right">
-                  <input id="signup-pass" class="input" type="password" placeholder="Password">
-                  <span class="icon is-small is-left">
-                    <i class="fa fa-lock"></i>
-                  </span>
-                  <span class="icon is-small is-right">
-                    <i class="fa fa-check"></i>
-                  </span>
-                </p>
-              </div>
-              <br>
-              <a id="signup-button" class="form-button button is-link is-inverted is-outlined">Sign Up</a>
-              <br>
-              <br>
-              <i><a id="feedback" class="feedback"></a></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>  
- </div>
-</section>
-
-<section class="section">
-	<div class="container" style="margin-left: 15px">
-		<h1 class="title"> TEST TEXT </h1> 
-		<h2 class="subtitle"> Subtitle </h2> 
-		<p> SOME MORE TEXT!!! </p> 
-	<div> 
-</section>
-
-<section class="hero">
-  <footer class="footer">
-    <div class="container">
-      <div class="content has-text-centered">
-        <p>
-          <strong> EPICYCLE </strong> by: Hunter Mellema, Chelsea Thangavelu, Connor Johnstone
-          <span class="icon is-small">
-            <i class="fa fa-copyright"></i>
-          </span>2017</a>
-        </p>
-      </div>
-    </div>
-  </footer>
-</section>
+<div class="pusher"> 
+	<div class="ui inverted vertical masthead center aligned segment" style="background-image: radial-gradient(circle at 50% 0%,#2b283c 0%, #1b182c 25%, #100e23 40%); min-height: 500px; padding: 1em;"> 
+	<div id='stars'></div>
+	<div id='stars2'></div>
+	<div id='stars3'></div>
+	<div class="ui container"> 
+		<div class="ui large secondary inverted pointing menu">
+			<a href="/" class="item"> 
+				Astrolabe
+			</a> 
+			<a class="item"> 
+				Features
+			</a> 
+			<a class="item"> 
+				Resources
+			</a> 
+			<a href="/about_us" class="item"> 
+				About Us
+			</a>
+			<div class="right item"> 
+				<a href="/login" class="ui inverted violet button"> 
+					Log In
+				</a>
+				<a href="/signup" class="ui violet button" style="margin-left: 0.75em"> 
+					Sign Up
+				</a> 
+			</div>
+		</div>
+	</div>
+	<div class="ui text container"> 
+		<h1 class="ui inverted header" style="margin-top: 100px"> 
+			Astrolabe
+		</h1> 
+		<h2> 
+			Modern Orbit determination, finally
+		</h2>
+		<a href="/signup" class="ui huge violet button"> 
+		Get Started
+		<i class="right arrow icon"> </i> 
+		</a>
+	</div>
+</div> 
+<div class="ui vertical stripe segment" style="backgroundcolor: white;"> 
+	<div class="ui middle aligned stackable grid container"> 
+		<div class="row"> 
+			<div class="eight wide column"> 
+				<h3 class="ui header"> 
+					WE DO THINGS
+				</h3> 
+				<p> Yup, all the things </p>
+				<h3 class="ui header"> 
+					MORE THINGS
+				</h3> 
+				<p> some lorem ipsum </p> 
+			</div> 
+			<div class="six wide right floated column"> 
+				<img class="ui large bordered rounded image" src="static/img/coolio.png"
+			</div> 
+		</div> 
+		<div class="row"> </div>
+	</div> 
+</div> 
+</div>
 {% endblock %}
 
 
