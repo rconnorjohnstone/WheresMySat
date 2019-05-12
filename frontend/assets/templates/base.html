@@ -11,9 +11,6 @@
     <link rel="stylesheet" href="../static/css/style.css">
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-	
-
-
 
 	{% block styles %}{% endblock %}
  </head>
@@ -23,16 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<!--Script to close notifications--> 
-	<script>
-        document.addEventListener('DOMContentLoaded', () => {
-          (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
-            $notification = $delete.parentNode;
-            $delete.addEventListener('click', () => {
-              $notification.parentNode.removeChild($notification);
-            });
-          });
-        });
-	</script>
+	<script src="../static/js/notifications.js"></script>
     {% block scripts %}{% endblock %}
       </body>
 </html>
