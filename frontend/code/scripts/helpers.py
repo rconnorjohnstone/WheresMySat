@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from app import app
+from app import app, db
 from scripts import tabledef
 from flask import session
 from sqlalchemy.orm import sessionmaker
@@ -24,7 +24,7 @@ def session_scope():
 
 
 def get_session():
-    return sessionmaker(bind=tabledef.engine)()
+    return sessionmaker(bind=db)()
 
 
 def get_user():

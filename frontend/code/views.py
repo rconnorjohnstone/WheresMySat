@@ -52,6 +52,32 @@ def login():
     user = helpers.get_user()
     return render_template('home.html', user=user)
 
+# TEST LOGIN PAGE
+@app.route('/login_test', methods=["GET", "POST"])
+def login_test():
+    form = forms.LoginFormTest(request.form)
+
+    if request.method == 'POST':
+        username = request.form['username'].lower()
+        password = request.form['password']
+        if form.validate():
+            if helpers.credentials_valid(username, password):
+                session['logged_in'] = True
+                session['username'] = username
+                user = helpers.get_user()
+                return render_template('home.html', user=user), 200
+
+            else:
+                flash('Invalid User or Password', 'warning')
+                return render_template("session/login.html"), 401
+
+        else:
+            flash('Both fields required', 'warning')
+            return render_template("session/login.html"), 400
+
+    return render_template("session/login.html")
+
+# TEST SIGNUP PAGE
 
 @app.route("/logout")
 def logout():
@@ -125,9 +151,3 @@ def uploader():
         return redirect(url_for('login'))
 
 #---------- Filtering interface ---------------------------------------------- #
-
-
-#---------- 404 Error Page --------------------------------------------------- #
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404

@@ -11,10 +11,18 @@ This file should be very thin. It will include things that will be imported thro
 - etc
 
 """
+######### BEGIN IMPORTS ###############
+# standard library imports
+import os
+
+# third party imports
 from flask import Flask
 from sqlalchemy import create_engine
 
-import os
+# local imports
+from errors import bp as errors_bp
+
+######### END IMPORTS ################
 
 
 # TODO: Change this to loading via environment variables
@@ -29,5 +37,10 @@ app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', './uploads')
 
 # Database setup
 db = create_engine(SQLALCHEMY_DATABASE_URI)
+
+
+# register blueprints
+app.register_blueprint(errors_bp)
+
 
 # Any other setup add below
