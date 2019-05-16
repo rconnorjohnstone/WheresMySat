@@ -1,0 +1,29 @@
+/*
+Title: Landing Page CSS 
+Author: Hunter Mellema
+Description: CSS for the Landing page of the Astrolabe OD project website
+License: MIT
+*/
+
+/* General CSS for formatting the page */
+.ui.inverted.vertical.masthead.center.aligned.segment {
+	background-image: radial-gradient(circle at 50% 0%,#2b283c 0%, #1b182c 25%, #100e23 40%); 
+	min-height: 500px; 
+	padding: 1em;
+}
+
+.ui.text.container h1 { 
+	margin-top: 100px; 
+	font-family: 'Snippet', sans-serif; 
+	font-size: 40pt;
+}
+
+.ui.text.container h2 {
+	font-family: 'Open Sans', sans-serif;
+}
+
+/* Ensures the fixed menu starts hidden and only pops up on scroll*/ 
+.fixed.menu {
+	display: none;
+}
+

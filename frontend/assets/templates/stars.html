@@ -25,6 +25,8 @@
 #stars2 {
   width: 2px;
   height: 2px;
+  border-radius: 50%;
+  opacity: 0.5;
   background: transparent;
   box-shadow: {{ starlist2 }}
   animation: animStar 200s linear infinite;
@@ -34,8 +36,7 @@
   position: absolute;
   top: 2000px;
   width: 3px;
-height: 3px;
-
+  height: 3px;
   background: transparent;
   box-shadow: {{ starlist2 }}
 }
@@ -43,12 +44,13 @@ height: 3px;
 #stars3 {
   width: 4px;
   height: 4px;
-background: transparent;
-border-radius: 50%;
-box-shadow:	{{ starlist3 }}
-animation: animStar 300s linear infinite;
+  border-radius: 50%;
+  opacity: 0.5;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow:	{{ starlist3 }}
+  animation: animStar 300s linear infinite;
 }
-
 #stars3:after {
   content: " ";
   position: absolute;

@@ -2,53 +2,53 @@
 
 {% block styles %}
 {% include "stars.html" %}
+<link rel="stylesheet" href="../static/css/landing_page.css ">
 <link href="https://fonts.googleapis.com/css?family=Snippet" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
 {% endblock %}
 
+
 {% block body %}
+<!-- Following Menu -->
+<div class="ui large top fixed menu">
+  <div class="ui container">
+    {% include "landing_nav_items.html" %}
+  </div>
+</div>
+
+
 <div class="pusher"> 
-	<div class="ui inverted vertical masthead center aligned segment" style="background-image: radial-gradient(circle at 50% 0%,#2b283c 0%, #1b182c 25%, #100e23 40%); min-height: 500px; padding: 1em;"> 
+	<!-- Cool purple background -->
+	<div class="ui inverted vertical masthead center aligned segment"> 
+
+	<!-- Adds the stars generated int stars.html to the background --> 
 	<div id='stars'></div>
 	<div id='stars2'></div>
 	<div id='stars3'></div>
+
+	<!-- Nav bar for landing page and all non-login pages -->
 	<div class="ui container"> 
-		<div class="ui large secondary inverted pointing menu">
-			<a href="/" class="item"> 
-				Astrolabe
-			</a> 
-			<a class="item"> 
-				Features
-			</a> 
-			<a class="item"> 
-				Resources
-			</a> 
-			<a href="/about_us" class="item"> 
-				About Us
-			</a>
-			<div class="right item"> 
-				<a href="/login" class="ui inverted violet button"> 
-					Log In
-				</a>
-				<a href="/signup" class="ui violet button" style="margin-left: 0.75em"> 
-					Sign Up
-				</a> 
-			</div>
-		</div>
-	</div>
+	 	<div class="ui large secondary inverted pointing menu">
+			{% include "landing_nav_items.html" %}
+		</div> 
+	</div> 
+	
+	<!-- Splash text and title --> 
 	<div class="ui text container"> 
-		<h1 class="ui inverted header" style="margin-top: 100px; font-family: 'Snippet', sans-serif; font-size: 40pt;"> 
+		<h1 class="ui inverted header"> 
 			Astrolabe
 		</h1> 
-		<h2 style="font-family: 'Open Sans', sans-serif;"> 
+		<h2> 
 			Modern Orbit Determination
 		</h2>
 		<a href="/signup" class="ui huge violet button"> 
 		Get Started
 		<i class="right arrow icon"> </i> 
 		</a>
-	</div>
+	</div>	
 </div> 
+
+<!-- Content Describing the product capabilities and testimonials -->
 <div class="ui vertical stripe segment" style="backgroundcolor: white;"> 
 	<div class="ui middle aligned stackable grid container"> 
 		<div class="row"> 
@@ -63,7 +63,7 @@
 				<p> some lorem ipsum </p> 
 			</div> 
 			<div class="six wide right floated column"> 
-				<img class="ui large bordered rounded image" src="static/img/coolio.png"
+				<img class="ui large bordered rounded image" src="static/img/coolio.png">
 			</div> 
 		</div> 
 		<div class="row"> </div>
@@ -73,7 +73,7 @@
 {% endblock %}
 
 
-
 {% block scripts %}
 <script src="../static/js/scripts.js"></script>
+<script src="../static/js/landing_page.js"></script>
 {% endblock %}
