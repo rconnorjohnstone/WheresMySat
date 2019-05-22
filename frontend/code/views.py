@@ -68,11 +68,11 @@ def login_test():
                 return render_template('home.html', user=user), 200
 
             else:
-                flash('Invalid User or Password', 'warning')
+                flash('Invalid User or Password', 'error')
                 return render_template("session/login.html"), 401
 
         else:
-            flash('Both fields required', 'warning')
+            flash('Both fields required', 'error')
             return render_template("session/login.html"), 400
 
     return render_template("session/login.html")
