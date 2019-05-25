@@ -12,7 +12,7 @@ import random
 def oe_to_rth(oe,mu):
     ''' Converts a 6 element list or ndarray of the form: semi-major axis, eccentricity,
      inclination, RAAN, argument of periapsis, true anomaly
-     
+
      All values are taken to be in radians
      '''
     a,e,i,O,w,ta = oe
@@ -27,7 +27,7 @@ def rth_to_xyz(state,oe):
     ''' Converts a 6 element list or ndarray of the form: radial position, tangential position, 
     out-of-plane position, radial velocity, tangential velocity, out-of-plane velocity and a list
     or ndarray of the orbital elements into a cartesian state vector
-     
+
      All values are taken to be in km or km/s
      '''
     raan, th, i = oe[3],oe[4]+oe[5],oe[2]
