@@ -1,5 +1,5 @@
 """
-Author: Hunter Mellema
+Author: Hunter Mellema, Connor Johnstone, Chelsea Thangavelu
 Description: Main script for the application. Point a WGSI compliant server to this file to
     run the application
 

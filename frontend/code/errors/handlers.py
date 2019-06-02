@@ -1,4 +1,5 @@
 """
+Authors: Hunter Mellema
 Description: Defines error handlers for HTTP error codes
 
 Currently Defined Error Handlers:

@@ -1,10 +1,13 @@
 """
+Authors: Hunter Mellema, Connor Johnstone, Chelsea Thangavelu
+Description: Defines the base app for use by a WSGI compliant server
 
+Notes: 
 This file should be very thin. It will include things that will be imported throughout the application
 
  It should include the following:
 - App
-- Database
+- Run the database setup
 - A cache
 - Any logging handlers
 - Task Queues
