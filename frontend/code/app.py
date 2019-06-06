@@ -2,7 +2,7 @@
 Authors: Hunter Mellema, Connor Johnstone, Chelsea Thangavelu
 Description: Defines the base app for use by a WSGI compliant server
 
-Notes: 
+Notes:
 This file should be very thin. It will include things that will be imported throughout the application
 
  It should include the following:
