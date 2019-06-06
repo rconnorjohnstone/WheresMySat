@@ -6,7 +6,7 @@ Description: Defines the structures of forms to be read from a web page
 from wtforms import Form, StringField, validators
 
 
-class LoginForm(Form):
+class SignupForm(Form):
     username = StringField('Username:',
                             validators=[validators.required(),
                             validators.Length(min=1, max=30)])
@@ -17,7 +17,7 @@ class LoginForm(Form):
                         validators=[validators.optional(),
                         validators.Length(min=0, max=50)])
 
-class LoginFormTest(Form):
+class LoginForm(Form):
     username = StringField('Username:',
                             validators=[validators.required(),
                             validators.Length(min=1, max=30)])

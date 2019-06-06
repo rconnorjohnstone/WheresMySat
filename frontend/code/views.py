@@ -39,7 +39,7 @@ def auth_required(fxn):
 
     """
     @wraps(fxn)
-    def auth_req_function(*arg, **kwargs):
+    def auth_req_function(*args, **kwargs):
         if not session.get('logged_in'):
             return redirect(url_for('login', next=request.url))
         else:
@@ -61,10 +61,27 @@ def skip_to_home(fxn):
     return skipped_page_fxn
 
 
+# ======== Routing =========================================================== #
+
+# -------- Home Page --------------------------------------------------------- #
+@app.route('/home', methods=['GET', 'POST'])
+@auth_required
+def home():
+    user = helpers.get_user()
+    return render_template("home.html", user=user)
+
+
+# -------- Landing Page ------------ ----------------------------------------- #
+@app.route('/', methods=['GET', 'POST'])
+@skip_to_home
+def landing_page():
+    return render_template('out_facing/landing_page.html')
+
+
 # -------- Login ------------------------------------------------------------- #
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    form = forms.LoginFormTest(request.form)
+    form = forms.LoginForm(request.form)
 
     if request.method == 'POST':
         username = request.form['username'].lower()
@@ -87,39 +104,38 @@ def login():
     return render_template("out_facing/login.html")
 
 
-# ======== Routing =========================================================== #
-
-# -------- Home Page --------------------------------------------------------- #
-@app.route('/home', methods=['GET', 'POST'])
-@auth_required
-def home_page():
-    user = helpers.get_user()
-    return render_template("home.html", user=user)
-
-
-# -------- Landing Page ------------ ----------------------------------------- #
-@app.route('/', methods=['GET', 'POST'])
-@skip_to_home
-def landing_page():
-    return render_template('out_facing/landing_page.html')
-
 # -------- Signup ---------------------------------------------------------- #
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    form = forms.LoginForm(request.form)
-    if request.method == 'POST':
-        username = request.form['username'].lower()
-        password = helpers.hash_password(request.form['password'])
-        email = request.form['email']
-        if form.validate():
-            if not helpers.username_taken(username):
-                helpers.add_user(username, password, email)
-                session['logged_in'] = True
-                session['username'] = username
-                return json.dumps({'status': 'Signup successful'})
-            return json.dumps({'status': 'Username taken'})
-        return json.dumps({'status': 'User/Pass required'})
-    return redirect(url_for('login'))
+    if session.get('logged_in'):
+        return redirect(url_for('home'))
+    else:
+        form = forms.SignupForm(request.form)
+
+        if request.method == 'POST':
+            username = request.form['username'].lower()
+            password = helpers.hash_password(request.form['password'])
+            email = request.form['email']
+
+            if form.validate():
+                if not helpers.username_taken(username):
+                    helpers.add_user(username, password, email)
+                    session['logged_in'] = True
+                    session['username'] = username
+                    return redirect(url_for('home'))
+                flash('Username taken', 'error')
+                return render_template("out_facing/signup.html"), 401
+            flash("Missing a required field", 'error')
+            return render_template("out_facing/signup.html"), 400
+        return render_template("out_facing/signup.html")
+
+
+#-------- Log Out ------------------------------------------------------------ #
+@app.route("/logout")
+def logout():
+    session['logged_in'] = False
+    return redirect(url_for('/'))
+
 
 # -------- Settings ---------------------------------------------------------- #
 @app.route('/settings', methods=['GET', 'POST'])
@@ -135,11 +151,6 @@ def settings():
     user = helpers.get_user()
     return render_template('settings.html', user=user)
 
-#-------- Log Out ------------------------------------------------------------ #
-@app.route("/logout")
-def logout():
-    session['logged_in'] = False
-    return redirect(url_for('/'))
 
 #--------- File Upload ------------------------------------------------------- #
 def upload_type_check(filename):
@@ -169,5 +180,6 @@ def uploader():
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 flash("File upload success!", 'success')
         return redirect(url_for('login'))
+
 
 #---------- Filtering interface ---------------------------------------------- #

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link href="https://fonts.googleapis.com/css?family=Snippet" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+<style type="text/css">
+    body {
+       background-color: white;
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
+<!-- Following Menu -->
+<div class="ui large top fixed menu">
+  <div class="ui container">
+    {% include "out_facing/landing_nav_items.html" %}
+  </div>
+</div>
+
+<div class="ui middle aligned center aligned grid">
+  <div class="six wide column">
+    <h2 class="ui image header">
+      <img src="../static/img/logo.png" class="image">
+      <div class="content">
+        Log-in to your account
+      </div>
+    </h2>
+
+    <form action="/login" method="post" class="ui large form">
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="username" placeholder="Username">
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" placeholder="Password">
+          </div>
+        </div>
+	<input class="ui fluid large violet submit button" type="submit" value="Login">
+      </div>
+      <div class="ui error message"></div>
+    </form>
+
+    {% include "notifications.html" %}
+
+
+    <div class="ui message">
+      New here? <a href="/signup"> Sign Up </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
