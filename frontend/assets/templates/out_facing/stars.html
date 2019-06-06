@@ -1,0 +1,73 @@
+<style>
+{% set starlist1 = gen_star_pos_list(500) %}
+{% set starlist2 = gen_star_pos_list(200) %}
+{% set starlist3 = gen_star_pos_list(100) %}
+
+#stars {
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  border-radius: 50%;
+  opacity: 0.5;
+  box-shadow: {{ starlist1 }}
+  animation: animStar 100s linear infinite;
+}
+#stars:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: {{ starlist1 }}
+}
+
+#stars2 {
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  opacity: 0.5;
+  background: transparent;
+  box-shadow: {{ starlist2 }}
+  animation: animStar 200s linear infinite;
+}
+#stars2:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: {{ starlist2 }}
+}
+
+#stars3 {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  opacity: 0.5;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow:	{{ starlist3 }}
+  animation: animStar 300s linear infinite;
+}
+#stars3:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 4px;
+  height: 4px;
+  background: transparent;
+  box-shadow: {{ starlist3 }}
+}
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+</style>

@@ -1,0 +1,77 @@
+<section class="hero is-white">
+<nav class="navbar is-transparent" style="background-color: transparent;">
+	<div class="navbar-brand">	
+		<a class="navbar-item" href="/">
+			<img src="/static/img/logo.png" alt="Epicycle Logo" style="padding-right:10px">
+        	<h6 href="/" class="subtitle"><strong> Epicycle</strong></h6>
+      	</a>
+		<div class="navbar-item"> 
+			<div class="dropdown is-right">
+			  <div class="dropdown-trigger" aria-haspopup="true" aria-controls="dropdown-menu">
+			    <button class="button is-link is-inverted" onclick="dropMenu()">
+			      <span class="icon is-small">
+			        <img src="/static/img/angle-double-down.svg" alt="Dropdown menu">
+			      </span>
+			  </div>
+			  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+			    <div class="dropdown-content">
+			      <a href="/" class="dropdown-item">
+			      	Mission Home 
+			      </a>
+			      <a href="/traj_builder" class="dropdown-item">
+			        Trajectory Builder
+			      </a>
+			      <a href="/od_analysis" class="dropdown-item">
+			        OD Analysis
+			      </a>
+			      <a href="http://localhost:3000" class="dropdown-item">
+			        Grafana
+			      </a>
+			      <hr class="dropdown-divider">
+			      <a href="/settings" class="dropdown-item">
+			      	<strong> Settings </strong>
+			      	<i class="fa fa fa-cog"> </i> 
+			      </a>
+			      <a href="/logout" class="dropdown-item">
+			      	<strong> Log Out </strong>
+			      </a>
+			    </div>
+			  </div>
+		</div>
+		</div> 	 
+    	<div id="navbar-burger-id" class="navbar-burger burger" data-target="navbar-menu-id">
+        	<span></span>
+        	<span></span>
+        	<span></span>
+      	</div>
+      </div>
+      <div class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control">
+              <a href="/logout" class="button is-link is-outlined">
+                <span>Logout</span>
+              </a>
+            </p>
+            <p class="control">
+              <a href="/settings" class="button is-link is-outlined">
+                <span id="cog" class="icon">
+                  <i class="fa fa fa-cog"></i>
+                </span>
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</section>
+<script> 
+var dropdown = document.querySelector('.dropdown');
+dropdown.addEventListener('click', function(event) {
+  event.stopPropagation();
+  dropdown.classList.toggle('is-active');
+});
+</script> 
+

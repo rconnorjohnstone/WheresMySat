@@ -1,0 +1,71 @@
+version: '3.2'
+
+networks: 
+    postgres-network: 
+    grafana-data:
+    worker-data: 
+
+volumes: 
+    grafana_data:
+    influxdb:
+    upload-data:
+
+services: 
+    userdb: 
+        image: postgres:11-alpine
+        volumes: 
+            - type: bind
+              source: $PG_STORAGE
+              target: /var/lib/postgresql/data
+        environment: 
+            - POSTGRES_USER=$PG_USER
+            - POSTGRES_PASSWORD=$PG_PASS
+            - POSTGRES_DB=$PG_DB
+        networks: 
+            - postgres-network
+        container_name: "userdb"
+            
+    frontend: 
+        build: ./frontend
+        ports: 
+            - "5000:${FLASK_PORT}"
+        volumes: 
+            - type: bind
+              source: $FLASK_STATIC
+              target: /usr/app/static
+            - type: bind
+              source: $FLASK_ASSETS
+              target: /usr/app/templates
+            - upload-data:/usr/app/uploads
+        networks: 
+            - postgres-network 
+        depends_on: 
+            - userdb
+
+    filter-data: 
+        image: influxdb:1.5-alpine
+        volumes: 
+            - influxdb:/var/lib/influxdb
+        environment: 
+            - INFLUXDB_DB=$IF_DB
+            - INFLUXDB_USER=$IF_USER
+            - INFLUXDB_USER_PASSWORD=$IF_PASS
+        networks: 
+            - worker-data
+            - grafana-data
+
+    grafana: 
+        image: grafana/grafana:6.0.2
+        depends_on: 
+            - filter-data
+        ports: 
+            - "3000:${GF_PORT}"
+        volumes: 
+            - grafana_data:/var/lib/grafana
+            - ./grafana/provisioning/:/etc/grafana/provisioning/
+        environment: 
+            - GF_SERVER_ROOT_URL=$GF_ROOT_URL
+            - GF_SECURITY_ADMIN_PASSWORD=$GF_ADMIN_PASS
+        networks: 
+            - grafana-data
+
