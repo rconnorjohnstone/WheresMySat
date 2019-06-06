@@ -1,2 +1,3 @@
 # DO NOT EVER track the true .env file!!!!
 .env
+.ipynb_checkpoints

@@ -54,8 +54,7 @@ def skip_to_home(fxn):
     @wraps(fxn)
     def skipped_page_fxn(*arg, **kwargs):
         if session.get('logged_in'):
-            user = helpers.get_user()
-            return render_template('home_page', user=user),
+            return redirect(url_for('home'))
         else:
             return fxn(*arg, **kwargs)
     return skipped_page_fxn
