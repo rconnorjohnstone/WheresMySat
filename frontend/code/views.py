@@ -133,7 +133,7 @@ def signup():
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
-    return redirect(url_for('/'))
+    return redirect(url_for('landing_page'))
 
 
 # -------- Settings ---------------------------------------------------------- #
