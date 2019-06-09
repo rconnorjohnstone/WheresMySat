@@ -28,11 +28,6 @@ from scripts import helpers
 
 ####### END IMPORTS ##############
 
-
-# ======== Constants ========================================================= #
-ALLOWED_EXTENSIONS = set(['csv', 'txt'])
-
-
 # ======== Auth Validation  ================================================== #
 def auth_required(fxn):
     """ Verifies that user is logged in. If not, routes them to the login page
@@ -152,33 +147,47 @@ def settings():
 
 
 #--------- File Upload ------------------------------------------------------- #
-def upload_type_check(filename):
+def upload_type_check(filename, file_list):
     """ Checks that upload file type has the required file extension
-
-    Args:
-        filename (string): name of file to check
 
     """
     condition = ('.' in filename) and (filename.rsplit('.', 1)[1].lower()
-                                       in ALLOWED_EXTENSIONS)
+                                       in set(file_list))
+
     return condition
 
+
+def allowed_files(extensions):
+    """ Verifies that files supplied to an enpoint match some pattern
+
+    """
+    def callable(fxn):
+        @wraps(fxn)
+        def wrapped(*args, **kwargs):
+            file = request.files['file']
+            if file.filename == '':
+                flash('No selected file!', 'warning')
+            if file:
+                if not upload_type_check(file.filename, extensions):
+                    flash('Wrong file type. Accepts: {}'.format(extensions), 'warning')
+                else:
+                    return fxn(file, *args, **kwargs)
+
+        return wrapped
+
+    return callable
+
+
 @app.route('/uploader', methods = ['POST'])
-def uploader():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file.filename == '':
-            flash('No selected file!', 'warning')
-        if file:
-            if not upload_type_check(file.filename):
-                flash('Wrong file type. Only accepts: {}'.format(ALLOWED_EXTENSIONS),
-                      'warning'
-                )
-            else:
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                flash("File upload success!", 'success')
-        return redirect(url_for('login'))
+@auth_required
+@allowed_files(['csv', 'txt'])
+def uploader(file):
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    flash("File upload success!", 'success')
+
+    return redirect(url_for('home'))
+
 
 
 #---------- Filtering interface ---------------------------------------------- #
