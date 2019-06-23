@@ -1,13 +1,23 @@
 {% extends "base.html" %}
+
+{% block styles %}
+
+{% endblock %}
+
 {% block body %}
-{% include "navbar.html" %}
+<div class="ui large top fixed menu">
+  <div class="ui container">
+    {% include "user_nav_items.html" %}
+  </div>
+</div>
+
 <title>ORBITZOD</title>
 <section class="hero is-primary is-bold is-small">
   <div class="hero-body">
     <div class="container has-text-centered">
       <div id="settings" class="settings-box">
-        <div class="settings-area">    
-          <h1 class="title">Settings</h1>         
+        <div class="settings-area">
+          <h1 class="title">Settings</h1>
           <div class="field">
             <p class="control has-icons-left">
               <input id="settings-user" class="input is-success" type="text" placeholder="{{user.username}}" readonly="readonly">
@@ -43,7 +53,7 @@
           <br>
           <i><a id="feedback" class="feedback"></a></i>
         </div>
-      </div>    
+      </div>
     </div>
   </div>
 </section>

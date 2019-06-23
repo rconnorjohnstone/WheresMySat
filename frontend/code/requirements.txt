@@ -5,3 +5,4 @@ py-bcrypt
 requests>=2.2.1
 psycopg2
 waitress
+watchdog
